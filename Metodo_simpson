@@ -1,0 +1,80 @@
+
+package Metodos_Numericos;
+
+import java.util.ArrayList;
+
+public class csMetodos3Simpson {
+    
+    public ArrayList<csFila3Simpson> Simpson(double LI,double LS, int Intervalo){
+        
+        double a,promedio=0,h,fo,fi,f2,impar = 0,par = 0;
+         ArrayList<csFila3Simpson> lista;
+         lista = new ArrayList<csFila3Simpson>();
+         // csFila3Simpson fila = new csFila3Simpson();
+         
+         h=(LI-LS)/Intervalo; //b-a/n
+        
+        if (Intervalo==2)
+        {
+    csFila3Simpson fila = new csFila3Simpson();
+            fila.setI(1);
+            fo=funcion(LI);
+            fila.setH(fo);
+            
+            promedio=(LS+LI)/Intervalo;
+            fi=4*(funcion(promedio));
+            fila.setAih(fi);
+            
+            f2=funcion(LS);
+            fila.setFaih(f2);
+            a=(h/4)*(fo+fi+f2);
+            
+            
+            
+            lista.add(fila);
+            
+        }
+        else {
+            
+            for(int i=0;i<=Intervalo;i++){
+                csFila3Simpson fila = new csFila3Simpson();
+              
+                fila.setI(i);
+                fila.setH(h);
+               double r=(LS+(i*h));
+                fila.setAih(r);
+              fila.setFaih(funcion(r));
+                
+              int value=i%2; 
+              
+           
+              if (i!=Intervalo && i!=0){ //par
+                  if(value==0){
+                      par=par+fila.getFaih(); 
+                }else{
+                      //impar
+                  impar=impar+fila.getFaih();
+
+            }
+              }
+                
+                 fila.setResultado((h/3)*(funcion(LI)+(4*(impar))+(2*(par))+(funcion(LS)))); 
+                 
+                 
+                 lista.add(fila);
+                    }
+
+        
+     //fila.setI(); 
+     
+    }
+        return lista;
+    }
+        
+    public double funcion(double x)
+    {
+        double n=Math.sin(x);
+    return n;
+}
+}
+
